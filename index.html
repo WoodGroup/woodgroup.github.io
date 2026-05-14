@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wood Group</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Comic Sans MS", cursive;
+    color: #eafff3;
+    overflow: hidden;
+
+    background: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    width: 700px;
+    margin: 60px auto;
+    padding: 20px;
+
+    border: 2px solid #7CFFB2;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 20px rgba(124,255,178,0.4);
+    text-align: center;
+  }
+
+  h1 {
+    color: #bfffe0;
+    text-shadow: 0 0 10px #00ff99;
+  }
+
+  .links a {
+    display: block;
+    margin: 10px;
+    color: #7CFFB2;
+    font-size: 18px;
+    text-decoration: underline;
+  }
+
+  .links a:hover {
+    color: white;
+  }
+
+  /* leaves */
+  .leaf {
+    position: fixed;
+    top: -50px;
+    width: 42px;
+    height: 42px;
+
+    background-image: url("https://pngimg.com/d/leaf_PNG36691.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    pointer-events: none;
+    z-index: 9999;
+
+    filter: drop-shadow(0 0 8px black);
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>WOOD GROUP</h1>
+
+  <p>a small forest web group</p>
+
+  <div class="links">
+    <a href="/Pleaze/">Enter Pleaze Page</a>
+  </div>
+
+</div>
+
+<script>
+function createLeaf() {
+  const leaf = document.createElement("div");
+  leaf.className = "leaf";
+
+  leaf.style.left = Math.random() * window.innerWidth + "px";
+  leaf.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+  document.body.appendChild(leaf);
+  setTimeout(() => leaf.remove(), 8000);
+}
+
+setInterval(createLeaf, 120);
+</script>
+
+</body>
+</html>
