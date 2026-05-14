@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pleaze</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Comic Sans MS", cursive;
+    color: #eafff3;
+    overflow: hidden;
+
+    background: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* dark overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 2px solid #7CFFB2;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 20px rgba(124,255,178,0.4);
+  }
+
+  h1 {
+    color: #bfffe0;
+    text-shadow: 0 0 10px #00ff99;
+  }
+
+  /* 🌿 PORTRAIT */
+  .portrait {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+  }
+
+  .portrait img {
+    width: 200px;
+    height: auto;
+
+    border: 2px solid #7CFFB2;
+    background: rgba(0,0,0,0.4);
+    padding: 8px;
+
+    box-shadow:
+      0 0 15px rgba(124,255,178,0.6),
+      0 0 30px rgba(0,255,150,0.3);
+
+    filter: drop-shadow(0 0 8px black);
+    border-radius: 10px;
+  }
+
+  nav button {
+    font-family: inherit;
+    background: rgba(0,0,0,0.5);
+    color: #7CFFB2;
+    border: 1px solid #7CFFB2;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  nav button:hover {
+    transform: scale(1.1);
+    background: rgba(0,255,150,0.2);
+  }
+
+  .page {
+    display: none;
+    margin-top: 20px;
+    border-top: 1px dashed #7CFFB2;
+    padding-top: 10px;
+  }
+
+  .active {
+    display: block;
+  }
+
+  /* click effect */
+  .click-flash {
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    background: #7CFFB2;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pop 0.4s ease-out forwards;
+    z-index: 9999;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+  }
+
+  /* 🍃 LEAVES */
+  .leaf {
+    position: fixed;
+    top: -60px;
+    width: 48px;
+    height: 48px;
+
+    background-image: url("https://pngimg.com/d/leaf_PNG36691.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 1;
+
+    filter: drop-shadow(0 0 10px #7CFFB2) drop-shadow(0 0 5px black);
+
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translate(0, -10vh) rotate(0deg);
+    }
+    50% {
+      transform: translate(70px, 50vh) rotate(180deg);
+    }
+    100% {
+      transform: translate(-70px, 110vh) rotate(360deg);
+    }
+  }
+
+  /* social link styling */
+  .social-link {
+    color: #7CFFB2;
+    font-size: 18px;
+    text-decoration: underline;
+  }
+
+  .social-link:hover {
+    color: #ffffff;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Pleaze</h1>
+
+  <!-- 🌿 PORTRAIT -->
+  <div class="portrait">
+    <img src="https://woodgroup.github.io/torso4.svg" alt="portrait">
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <button onclick="clickAction('about')">about</button>
+    <button onclick="clickAction('projects')">projects</button>
+    <button onclick="clickAction('socials')">socials</button>
+  </nav>
+
+  <!-- ABOUT -->
+  <div id="about" class="page active">
+    <h2>about</h2>
+    <p>Hello. I like exploring forests and I like nature alot!</p>
+  </div>
+
+  <!-- PROJECTS -->
+  <div id="projects" class="page">
+    <h2>projects</h2>
+    <p>still empty but clickable.</p>
+  </div>
+
+  <!-- SOCIALS -->
+  <div id="socials" class="page">
+    <h2>socials</h2>
+    <p>find me here:</p>
+
+    <a class="social-link"
+       href="https://scratch.mit.edu/users/Pleaze103/"
+       target="_blank">
+      👉 Scratch Profile
+    </a>
+  </div>
+
+</div>
+
+<script>
+function clickAction(page) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+}
+
+/* click effect */
+document.addEventListener("click", (e) => {
+  const dot = document.createElement("div");
+  dot.className = "click-flash";
+  dot.style.left = e.clientX + "px";
+  dot.style.top = e.clientY + "px";
+  document.body.appendChild(dot);
+  setTimeout(() => dot.remove(), 400);
+});
+
+/* 🍃 leaves */
+function createLeaf() {
+  const leaf = document.createElement("div");
+  leaf.className = "leaf";
+
+  const size = 30 + Math.random() * 25;
+  leaf.style.width = size + "px";
+  leaf.style.height = size + "px";
+
+  leaf.style.left = Math.random() * window.innerWidth + "px";
+  leaf.style.animationDuration = (4 + Math.random() * 3) + "s";
+
+  document.body.appendChild(leaf);
+
+  setTimeout(() => leaf.remove(), 9000);
+}
+
+setInterval(createLeaf, 70);
+</script>
+
+</body>
+</html>
